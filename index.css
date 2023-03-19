@@ -75,21 +75,16 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .game-board {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  justify-content: space-around;
-}
-.board-row {
-  display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
-.square {
+ 
+.cell {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 64px;
-  padding: 12px;
   cursor: pointer;
   border: 1px solid rgb(94, 91, 91);
   color: aliceblue;
-  padding: 80px;
+  padding: 24px;
 }
