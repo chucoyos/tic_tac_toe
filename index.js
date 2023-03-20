@@ -13,6 +13,28 @@ const gameController = (() => {
 
   const player1Cells = [];
   const player2Cells = [];
+  const checkWin = () => {
+    winningCombos.forEach(combo => {
+      if(combo.every(cell => player1Cells.includes(cell.toString()))) {
+        alert('Player 1 wins!');
+        resetGame();
+      } else if(combo.every(cell => player2Cells.includes(cell.toString()))) {
+        alert('Player 2 wins!');
+        resetGame();
+      } else if(player1Cells.length + player2Cells.length === 9) {
+        alert('Draw!');
+        resetGame();
+      }
+    });
+  };
+  const resetGame = () => {
+    player1Cells.length = 0;
+    player2Cells.length = 0;
+    cells.forEach(cell => {
+      cell.textContent = '';
+      cell.dataset.taken = 'false';
+    });
+  };
    
   const player = (name, symbol) => {
     const getName = () => name;
@@ -35,19 +57,7 @@ const gameController = (() => {
         player2Cells.push(e.target.dataset.index);
       }
       currentPlayer = currentPlayer === player1 ? player2 : player1;
-      if(player1Cells.length >= 3) {
-        winningCombos.forEach(combo => {
-          if(combo.every(cell => player1Cells.includes(cell.toString()))) {
-            alert('Player 1 wins!');
-          }
-        });
-      } if(player2Cells.length >= 3) {
-        winningCombos.forEach(combo => {
-          if(combo.every(cell => player2Cells.includes(cell.toString()))) {
-            alert('Player 2 wins!');
-          }
-        });
-      }
+      checkWin();
     }
     e.target.dataset.taken = 'true';
   }
