@@ -1,71 +1,66 @@
-const gameController = (() => {
-  const board = ['', '', '', '', '', '', '', '', ''];
-  const winningCombos = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
+const board = [
+  ['X', 'X', 'O'],
+  ['O', 'O', 'X'],
+  ['O', 'X', 'O']
+]
+const humanPlayer = {
+  name: 'Human Player',
+  symbol: 'X'
+}
+const computerPlayer = {
+  name: 'Computer Player',
+  symbol: 'O'
+}
 
-  const player1Cells = [];
-  const player2Cells = [];
-  const checkWin = () => {
-    winningCombos.forEach(combo => {
-      if(combo.every(cell => player1Cells.includes(cell.toString()))) {
-        alert('Player 1 wins!');
-        resetGame();
-      } else if(combo.every(cell => player2Cells.includes(cell.toString()))) {
-        alert('Player 2 wins!');
-        resetGame();
-      } else if(player1Cells.length + player2Cells.length === 9) {
-        alert('Draw!');
-        resetGame();
-      }
-    });
-  };
-  const resetGame = () => {
-    player1Cells.length = 0;
-    player2Cells.length = 0;
-    cells.forEach(cell => {
-      cell.textContent = '';
-      cell.dataset.taken = 'false';
-    });
-  };
-   
-  const player = (name, symbol) => {
-    const getName = () => name;
-    const getSymbol = () => symbol;
-    return { getName, getSymbol };
-  };
-  const player1 = player('Player 1', 'X');
-  const player2 = player('Player 2', 'O');
-  let currentPlayer = player1;
-  const cells = document.querySelectorAll('.cell');
-  
-  const handleClick = (e) => {
-    if(e.target.dataset.taken === 'true') {
-      alert('Cell is already taken');
-    } else {
-      e.target.textContent = currentPlayer.getSymbol();
-      if(currentPlayer === player1) {
-        player1Cells.push(e.target.dataset.index);
+function evaluate() {
+  // check rows
+  for(let row = 0; row < 3; row++) {
+     if(board[row][0] === board[row][1] && board[row][1] === board[row][2]){
+      if(board[row][0] === humanPlayer.symbol){
+        console.log('Human Player wins')
+        return - 10
       } else {
-        player2Cells.push(e.target.dataset.index);
+        console.log('Computer Player wins')
+        return + 10
       }
-      currentPlayer = currentPlayer === player1 ? player2 : player1;
-      checkWin();
-    }
-    e.target.dataset.taken = 'true';
+     }
   }
+  //check for columns
+  for(let col = 0; col < 3; col++){
+    if(board[0][col] === board[1][col] && board[1][col] === board[2][col]){
+      if(board[0][col] === humanPlayer.symbol){
+        console.log('Human Player wins')
+        return - 10
+      } else {
+        console.log('Computer Player wins')
+        return + 10
+      }
+    }
+  }
+  // check for diagonals
+  for(let col = 0; col < 3; col++){//TODO
+    if(board[0][col] === board[1][col + 1] && board[1][col + 1] === board[2][col + 2]){
+      if(board[0][col] === humanPlayer.symbol){
+        console.log(humanPlayer.name + ' wins')
+        return - 10
+      } else {
+        if(board[0][col] === computerPlayer.symbol){
+          console.log(computerPlayer.name + ' wins')
+          return + 10
+        }
+      }
+    } else if(board[0][2] === board[1][1] && board[1][1] === board[2][0]){
+      if(board[0[2]] === humanPlayer.symbol){
+        console.log(humanPlayer.name + ' wins')
+        return - 10
+      } else {
+        console.log(computerPlayer.name + ' wins')
+        return + 10
+      }
+    }
+  }
+}
 
-  cells.forEach(cell => {
-    cell.addEventListener('click', handleClick);
-  });
-})();
-
+evaluate()
 
 

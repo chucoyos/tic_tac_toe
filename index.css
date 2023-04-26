@@ -87,4 +87,6 @@ p, h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgb(94, 91, 91);
   color: aliceblue;
   padding: 24px;
+  min-width: 140px;
+  min-height: 140px;
 }
